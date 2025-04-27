@@ -42,10 +42,10 @@ A secure web application designed for creating, distributing, and taking online 
 
 ## System Architecture
 
-### Class Diagram
-![Class Diagram](class-diagram.png)
 ### Use Case Diagram
 ![Use Case Diagram](use-case-diagram.png)
+### Class Diagram
+![Class Diagram](class-diagram.png)
 ### Sequence Diagram
 ![Sequence Diagram](sequence-diagram.png)
 ### Deployment Diagram
