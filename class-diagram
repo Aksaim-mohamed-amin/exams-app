@@ -1,0 +1,93 @@
+@startuml
+
+class Professor {
+  - id: Int
+  - firstName: String
+  - lastName: String
+  - email: String
+  - password: String
+  - examsCreated: List<Exam>
+  + createExam(name: String, description: String, questions: List<Question>, durationMinutes: int, maxAttemptsAllowed: int): Exam
+  + assignExamToStudent(exam: Exam, student: Student, passcode: String, finalDate: Date): AssignedExam
+}
+
+class Student {
+  - id: Int
+  - firstName: String
+  - lastName: String
+  - email: String
+  - assignedExams: List<AssignedExam>
+  - examsTaken: List<Result>
+  + takeExam(exam: Exam): Result
+  + viewResults(exam: Exam): Result
+}
+
+class Exam {
+  - id: Int
+  - name: String
+  - description: String
+  - questions: List<Question>
+  - questionsCount: int
+  - durationMinutes: int
+  - maxAttemptsAllowed: int
+  - professor: Professor
+  + addQuestion(question: Question): void
+  + removeQuestion(question: Question): void
+  + updateQuestion(question: Question): void
+}
+
+class Result {
+  - id: Int
+  - exam: Exam
+  - student: Student
+  - correctQuestionIds: List<Int>
+  - studentAnswers: Map<QuestionId, AnswerId>
+  - score: Double
+  - status: Enum [PASSED, FAILED, NOT_TAKEN]
+  - date: Date
+  + calculateScore(): Double
+}
+
+class AssignedExam {
+  - id: Int
+  - student: Student
+  - exam: Exam
+  - passcode: String
+  - sentAt: Date
+  - finalDate: Date
+  - attemptsMade: Int
+  - status: Enum [PENDING, IN_PROGRESS, COMPLETED, EXPIRED]
+  + sendExamLink(): void
+  + updateStatus(status: Enum): void
+}
+
+
+class Question {
+  - id: Int
+  - questionText: String
+  - correctAnswers: List<Answer>
+  - wrongAnswers: List<Answer>
+  - imagesUrl: List<String>
+  + validateAnswer(answer: Answer): Boolean
+}
+
+class Answer {
+  - id: Int
+  - question: Question
+  - answerText: String
+  + checkCorrectness(): Boolean
+}
+
+' Relationships
+Student "1" -- "0..*" AssignedExam
+Student "1" -- "0..*" Result
+Professor "1" -- "0..*" Exam
+Exam "1" -- "0..*" Question
+Exam "1" -- "0..*" AssignedExam
+AssignedExam "1" -- "1" Exam
+AssignedExam "1" -- "1" Student
+Result "1" -- "1" Exam
+Result "1" -- "1" Student
+Question "1" -- "0..*" Answer
+
+@enduml

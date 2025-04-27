@@ -1,0 +1,35 @@
+@startuml
+
+actor Professor
+actor Student
+entity "Web Server" as WebServer
+entity "Database" as Database
+entity "AI Service" as AIService
+entity "Mail Server" as MailServer
+
+Professor -> WebServer : login(username, password)
+WebServer -> Database : validateCredentials(username, password)
+Database -> WebServer : return ProfessorDetails
+WebServer -> WebServer : createJwtToken(ProfessorDetails)
+WebServer -> Professor : returnJwtToken
+
+Professor -> WebServer : createExam(name, description, questions, durationMinutes, maxAttemptsAllowed)
+WebServer <-> AIService : requestAIAnswers(questions)
+WebServer -> Database : storeExam(exam)
+WebServer -> MailServer : sendExamLinkToStudent(studentEmail, passcode, examLink)
+MailServer -> Student : emailExamLink
+WebServer -> Database : storeAssignedExam(student, exam, passcode)
+
+Student -> WebServer : accessExam(exam, passcode)
+WebServer -> Database : validateExamPasscode(student, exam, passcode)
+WebServer -> Database : fetchExamQuestions(exam)
+WebServer -> Student : displayExamQuestions(questions)
+
+Student -> WebServer : submitAnswers(studentAnswers)
+WebServer -> Database : storeStudentAnswers(student, exam, studentAnswers)
+WebServer -> Database : calculateResult(student, exam)
+WebServer -> MailServer : sendResultToStudent(studentEmail, score)
+MailServer -> Student : emailResult(score)
+WebServer -> Student : displayResult(score)
+
+@enduml

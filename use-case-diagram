@@ -1,0 +1,22 @@
+@startuml
+
+actor Professor
+actor Student
+
+Professor -- (Login)
+
+(Login) -- (View Results)
+(Login) -- (Create Exam)
+(Login) -- (Assign Exam to Student)
+
+(Create Exam) -- (Add Questions)
+(Create Exam) -- (Generate AI Answers)
+
+Student -- (Access Exam Link)
+(Access Exam Link) -- (Enter Passcode)
+(Enter Passcode) -- (Start Exam)
+(Start Exam) -- (Submit Answers)
+
+(Enter Passcode) -- (View Result)
+
+@enduml

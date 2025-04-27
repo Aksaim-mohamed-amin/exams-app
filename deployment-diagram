@@ -1,0 +1,44 @@
+@startuml
+node "Web Server" {
+  component "Application" {
+    artifact "Exam Management System (Spring Boot)"
+    interface "Web Interface (HTTP)"
+  }
+}
+
+node "Database Server" {
+  component "Database" {
+    artifact "MySQL Database"
+    interface "SQL Interface"
+  }
+}
+
+node "Mail Server" {
+  component "Mailing System" {
+    artifact "SMTP Server"
+    interface "SMTP (Mail)"
+  }
+}
+
+node "AI Service" {
+  component "AI Answer Generation" {
+    artifact "AI Model (deepseek)"
+    interface "API Interface"
+  }
+}
+
+node "Student / Professor Client" {
+  component "Client App" {
+    artifact "Web Browser"
+    interface "Web Interface (HTTP)"
+  }
+}
+
+
+
+"Student / Professor Client" --> "Web Server" : Accesses Application
+"Web Server" --> "Database Server" : CRUD Operations
+"Web Server" --> "Mail Server" : Sends emails
+"Web Server" --> "AI Service" : Sends requests for AI-generated answers
+
+@enduml
