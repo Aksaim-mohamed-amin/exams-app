@@ -43,13 +43,13 @@ A secure web application designed for creating, distributing, and taking online 
 ## System Architecture
 
 ### Use Case Diagram
-![Use Case Diagram](use-case-diagram.png)
+![Use Case Diagram](./diagrams/use-case-diagram.png)
 ### Sequence Diagram
-![Sequence Diagram](sequence-diagram.png)
+![Sequence Diagram](./diagrams/sequence-diagram.png)
 ### Class Diagram
-![Class Diagram](class-diagram.png)
+![Class Diagram](./diagrams/class-diagram.png)
 ### Deployment Diagram
-![Deployment Diagram](deployment-diagram.png)
+![Deployment Diagram](./diagrams/deployment-diagram.png)
 
 ## Installation
 ### Prerequisites
