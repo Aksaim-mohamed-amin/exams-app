@@ -44,10 +44,10 @@ A secure web application designed for creating, distributing, and taking online 
 
 ### Use Case Diagram
 ![Use Case Diagram](use-case-diagram.png)
-### Class Diagram
-![Class Diagram](class-diagram.png)
 ### Sequence Diagram
 ![Sequence Diagram](sequence-diagram.png)
+### Class Diagram
+![Class Diagram](class-diagram.png)
 ### Deployment Diagram
 ![Deployment Diagram](deployment-diagram.png)
 
