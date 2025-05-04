@@ -1,81 +1,70 @@
 @startuml
 
-class Professor {
-  - id: Int
-  - firstName: String
-  - lastName: String
-  - email: String
-  - password: String
-  - examsCreated: List<Exam>
-  + createExam(name: String, description: String, questions: List<Question>, durationMinutes: int, maxAttemptsAllowed: int): Exam
-  + assignExamToStudent(exam: Exam, student: Student, passcode: String, finalDate: Date): AssignedExam
+class User {
+    - id: Int
+    - firstName: String
+    - lastName: String
+    - email: String
+    - password: String
+    - role: Enum [STUDENT, PROFESSOR]
 }
 
-class Student {
-  - id: Int
-  - firstName: String
-  - lastName: String
-  - email: String
-  - assignedExams: List<AssignedExam>
-  - examsTaken: List<Result>
-  + takeExam(exam: Exam): Result
-  + viewResults(exam: Exam): Result
+class Student extends User {
+    - assignedExams: List<AssignedExam>
+    - examsResults: List<Result>
+}
+
+class Professor extends User {
+    - exams: List<Exam>
+    - assignedExams: List<AssignedExam>
+    - examsResults: List<Result>
 }
 
 class Exam {
-  - id: Int
-  - name: String
-  - description: String
-  - questions: List<Question>
-  - questionsCount: int
-  - durationMinutes: int
-  - maxAttemptsAllowed: int
-  - professor: Professor
-  + addQuestion(question: Question): void
-  + removeQuestion(question: Question): void
-  + updateQuestion(question: Question): void
-}
-
-class Result {
-  - id: Int
-  - exam: Exam
-  - student: Student
-  - correctQuestionIds: List<Int>
-  - studentAnswers: Map<QuestionId, AnswerId>
-  - score: Double
-  - status: Enum [PASSED, FAILED, NOT_TAKEN]
-  - date: Date
-  + calculateScore(): Double
+    - id: Int
+    - name: String
+    - description: String
+    - questions: List<Question>
+    - questionsCount: Int
+    - durationMinutes: Int
+    - maxAttemptsAllowed: Int
+    - professor: Professor
 }
 
 class AssignedExam {
-  - id: Int
-  - student: Student
-  - exam: Exam
-  - passcode: String
-  - sentAt: Date
-  - finalDate: Date
-  - attemptsMade: Int
-  - status: Enum [PENDING, IN_PROGRESS, COMPLETED, EXPIRED]
-  + sendExamLink(): void
-  + updateStatus(status: Enum): void
+    - id: Int
+    - student: Student
+    - exam: Exam
+    - passcode: String
+    - sentAt: Date
+    - finalDate: Date
+    - attemptsMade: Int
+    - status: Enum [PENDING, IN_PROGRESS, COMPLETED, EXPIRED]
 }
 
+class Result {
+    - id: Int
+    - exam: Exam
+    - student: Student
+    - correctQuestionIds: List<Int>
+    - studentAnswers: Map<QuestionId, AnswerId>
+    - score: Double
+    - status: Enum [PASSED, FAILED, NOT_TAKEN]
+    - date: Date
+}
 
 class Question {
-  - id: Int
-  - questionText: String
-  - correctAnswers: List<Answer>
-  - wrongAnswers: List<Answer>
-  - imagesUrl: List<String>
-  + validateAnswer(answer: Answer): Boolean
+    - id: Int
+    - questionText: String
+    - correctAnswers: List<Answer>
+    - wrongAnswers: List<Answer>
+    - imageUrls: List<String>
 }
 
 class Answer {
-  - id: Int
-  - question: Question
-  - answerText: String
-  + checkCorrectness(): Boolean
+    - id: Int
+    - question: Question
+    - answerText: String
 }
 
 ' Relationships

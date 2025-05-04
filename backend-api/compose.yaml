@@ -1,0 +1,10 @@
+services:
+  mysql:
+    image: 'mysql:latest'
+    environment:
+      - 'MYSQL_DATABASE=exams'
+      - 'MYSQL_PASSWORD=as1Oy0NP6PLH2LnGlefWI'
+      - 'MYSQL_ROOT_PASSWORD=5DFiBJcQLNPqkBGQki89S'
+      - 'MYSQL_USER=backendApi'
+    ports:
+      - '3306:3306'
