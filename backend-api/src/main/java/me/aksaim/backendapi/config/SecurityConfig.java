@@ -29,13 +29,21 @@ public class SecurityConfig {
 				.cors(cors -> cors.configurationSource(corsConfiguration()))
 				.csrf(AbstractHttpConfigurer::disable)
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-				.authorizeHttpRequests(request -> {
-					// Open endpoints
-					request.requestMatchers(HttpMethod.POST, "/api/auth/**").permitAll();
+				.authorizeHttpRequests(request -> request
+						// Permit all requests to the authentication and create professor
+						.requestMatchers(HttpMethod.POST, "/api/v1/auth/**").permitAll()
 
-					// Protected endpoints
-					request.anyRequest().authenticated();
-				})
+						// Block all other requests to the authentication
+						.requestMatchers("/api/v1/professors/**").hasRole("PROFESSOR")
+						.requestMatchers("/api/v1/exams/**").hasRole("PROFESSOR")
+						.requestMatchers("/api/v1/questions/**").hasRole("PROFESSOR")
+						.requestMatchers("/api/v1/answers/**").hasRole("PROFESSOR")
+						.requestMatchers("/api/v1/students/**").hasRole("STUDENT")
+						.requestMatchers("/api/v1/assignments/**").hasAnyRole("PROFESSOR", "STUDENT")
+						.requestMatchers("/api/v1/results/**").hasAnyRole("PROFESSOR", "STUDENT")
+						.requestMatchers("/api/v1/users/**").hasAnyRole("PROFESSOR", "STUDENT")
+						.anyRequest().authenticated()
+				)
 				.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
 				.build();
 	}

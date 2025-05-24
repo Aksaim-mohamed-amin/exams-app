@@ -6,7 +6,6 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import me.aksaim.backendapi.auth.JwtService;
 import me.aksaim.backendapi.models.user.User;
 import me.aksaim.backendapi.models.user.UserService;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -26,6 +25,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+		String path = request.getServletPath();
+		if (path.startsWith("/api/v1/auth/")) {
+			filterChain.doFilter(request, response);
+			return;
+		}
+
 		Optional<Cookie> jwtCookie = Optional.ofNullable(request.getCookies())
 				.flatMap(
 						cookies -> Arrays.stream(cookies)

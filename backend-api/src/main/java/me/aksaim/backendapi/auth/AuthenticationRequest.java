@@ -1,12 +1,9 @@
 package me.aksaim.backendapi.auth;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 
-@Data
-@AllArgsConstructor
-public class AuthenticationRequest {
-	private String email;
-	private String password;
+public record AuthenticationRequest(
+		@NotBlank @Email String email,
+		@NotBlank String password) {
 }
